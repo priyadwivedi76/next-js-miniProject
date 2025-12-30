@@ -1,4 +1,9 @@
 import {database} from '@/config/db_info.jsx'
+
+
+//isr
+export const revalidate=30;
+
 const StaticPage=async()=>{
     const [doctors] = await database.execute("select * from doctors");
     console.log(doctors)
