@@ -1,13 +1,18 @@
 'use client'
 import { contactInfo } from "./contact.action";
-
+import { useActionState } from "react";
 const client=()=>{
-    const handleSubmit=(formData)=>{
-        //used in client form action
-        const { name, email, message } = Object.fromEntries(formData.entries());
-        console.log(name, email, message);
-        contactInfo(name,email,message)
-    }
+
+    // const handleSubmit=(formData)=>{
+    //     //used in client form action
+    //     const { name, email, message } = Object.fromEntries(formData.entries());
+    //     console.log(name, email, message);
+    //     contactInfo(name,email,message)
+    // }
+
+    //using useAction
+    const [state,formAction,isPending]=useActionState(contactInfo,null)
+    
     return (
         <>
         <div className="min-h-screen bg-[rgb(14,14,14)] text-white">
@@ -18,7 +23,7 @@ const client=()=>{
             </h1>
 
             <div className="bg-gray-900/50 backdrop-blur-sm rounded-lg p-8 border border-gray-800">
-              <form className="space-y-6" action={handleSubmit}>
+              <form className="space-y-6" action={formAction}>
                 {/* Full Name Field */}
 
                 <div>
@@ -77,12 +82,22 @@ const client=()=>{
                 {/* Submit Button */}
                 <button
                  type="submit"
+                 disabled={isPending}
                  className="w-full bg-pink-600 hover:bg-pink-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-medium py-3 px-6 rounded-lg transition-colors duration-200 flex items-center justify-center space-x-2"
                 >
-                    <span> Send Message</span>
+                  {isPending ? (<span>Loading..</span>) : (<span> Send Message</span>)}
+                
                 </button>
               </form>
             </div>
+
+            <section>
+              {state && (
+                <p className={`${state.success ? "bg-green-500" : "bg-red-500" } text-white p-4 mt-5 text-center`}>
+                  {state.message}
+                </p>
+              )}
+            </section>
           </div>
         </div>
       </div>
