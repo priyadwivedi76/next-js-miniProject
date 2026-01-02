@@ -2,8 +2,11 @@ import React from 'react'
 
 const QuoteCard = async() => {
 
-const API_KEY='OnrtNJiKO3aEXihBVUqDgA==WHDTm7UQfu5VZNkF'
-const res=await fetch(`https://api.api-ninjas.com/v2/quoteoftheday?X-Api-Key=${API_KEY}`)
+const res=await fetch(`https://api.api-ninjas.com/v2/quoteoftheday`,{
+  headers:{
+    'X-API-Key':process.env.API_KEY
+  }
+})
 const [data]=await res.json();
 
   return (
@@ -12,9 +15,7 @@ const [data]=await res.json();
         <h3 className='text-red-800 text-md font-medium text-right m-3 hover:underline transition ease-in-ease-out'>-{data.author}</h3>
         <div className='flex gap-1 text-sm mx-3 mt-10 opacity-[70%] hover:opacity-[100%] transition ease-in-ease-out'>
             <h1 className='text-red-500 text-bold'>Category:</h1>
-            {data.categories.map((items)=>(
-                <p key={items}>{items},</p>
-            ))}
+            {data.categories.join(',')}
         </div>
     </div>
   )
