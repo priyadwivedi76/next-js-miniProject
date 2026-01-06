@@ -1,5 +1,6 @@
 import React from 'react'
 import todoInfo from './todo.action'
+import Link from 'next/link'
 
 const Create = () => {
   return (
@@ -37,9 +38,10 @@ const Create = () => {
             </div>
           </div>
         </div>
-
-        <input type='submit' className='button p-3 w-24 text-center text-white rounded-lg' name='submit'/>
-
+        <div className='flex gap-5'>
+          <input type='submit' className='button p-3 w-24 text-center text-white rounded-lg' name='submit'/>
+          <Link href={'/'} className='button p-3 w-36 text-center text-white rounded-lg'>See Todos</Link>
+        </div>
       </form>
     </div>
   )
